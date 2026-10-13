@@ -1,0 +1,322 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<title>가격정보 - 친환경농산물 - 품목별 엑셀 출력</title>
+	<meta http-equiv="Content-Type" content="application/vnd.ms-excel;charset=utf-8">
+	<style type="text/css">
+		table caption	{ text-align:left; }
+		table th		{ background-color:#eff2f9; }
+		table td		{ mso-number-format:\@; text-align:general; vertical-align:middle; text-align:center; white-space:nowrap; mso-rotate:0; mso-background-source:auto; mso-pattern:auto; color:black; font-size:11.0pt; font-style:normal; text-decoration:none; font-family:"맑은 고딕", monospace; mso-font-charset:129; border:1px; mso-protection:locked visible; mso-style-name:표준; mso-style-id:0; }
+		table td.c		{ text-align:center;}
+		table td.l		{ text-align:left; }
+		table td.r		{ text-align:right; }
+	</style>
+</head>
+<body>
+	<table>
+		<tr>
+			<td	class="data">
+				<table id="data" border="1px">
+					
+											<caption>소매가격
+				                    			
+					                    			
+					                    				채소류,
+					                    				
+											           		배추,
+											           	
+											           		전체,
+											           	
+											           	상품,
+											           	1포기
+					                    			
+				                    			
+					                    			
+				                    			
+											 기간별/월간 가격정보</caption>
+											<colgroup>
+												<col style="width:120px">
+												
+													
+													
+														
+															<col style="width:100px">
+														
+															<col style="width:100px">
+														
+															<col style="width:100px">
+														
+															<col style="width:100px">
+														
+															<col style="width:100px">
+														
+															<col style="width:100px">
+														
+													
+												
+												<col style="width:100px">
+											</colgroup>
+											<thead>
+												<tr>
+													<th class="first" scope="col">구분
+														<button type="button" class="btn ic filter" title="필터" onclick="setTableId(1);view_show('_filter');"><i class="feather icon-filter"></i></button>
+														<button type="button" class="btn ic sort" onclick="fncSortTbl(this, '#itemTable_1', 'desc');" title="기본 정렬됨"><i class="feather icon-align-justify"></i></button>
+													</th>
+													
+													
+														
+														
+															
+																<th scope="col">2026년<button type="button" class="btn ic sort" onclick="fncSortTbl(this, '#itemTable_1', 'desc');" title="기본 정렬됨"><i class="feather icon-align-justify"></i></button></th>
+															
+																<th scope="col">2025년<button type="button" class="btn ic sort" onclick="fncSortTbl(this, '#itemTable_1', 'desc');" title="기본 정렬됨"><i class="feather icon-align-justify"></i></button></th>
+															
+																<th scope="col">2024년<button type="button" class="btn ic sort" onclick="fncSortTbl(this, '#itemTable_1', 'desc');" title="기본 정렬됨"><i class="feather icon-align-justify"></i></button></th>
+															
+																<th scope="col">2023년<button type="button" class="btn ic sort" onclick="fncSortTbl(this, '#itemTable_1', 'desc');" title="기본 정렬됨"><i class="feather icon-align-justify"></i></button></th>
+															
+																<th scope="col">2022년<button type="button" class="btn ic sort" onclick="fncSortTbl(this, '#itemTable_1', 'desc');" title="기본 정렬됨"><i class="feather icon-align-justify"></i></button></th>
+															
+																<th scope="col">2021년<button type="button" class="btn ic sort" onclick="fncSortTbl(this, '#itemTable_1', 'desc');" title="기본 정렬됨"><i class="feather icon-align-justify"></i></button></th>
+															
+														
+													
+													
+													<th scope="col">평년<button type="button" class="btn ic sort" onclick="fncSortTbl(this, '#itemTable_1', 'desc');" title="기본 정렬됨"><i class="feather icon-align-justify"></i></button></th>
+												</tr>
+											</thead>
+											<tbody>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">01월</th>
+														
+														
+															<td>4,885</td>
+															<td>4,958</td>
+															<td>3,043</td>
+															<td>2,952</td>
+															<td>4,228</td>
+															<td>3,027</td>
+															<td class="last">3,433</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">02월</th>
+														
+														
+															<td>4,868</td>
+															<td>5,142</td>
+															<td>3,457</td>
+															<td>3,047</td>
+															<td>4,089</td>
+															<td>3,804</td>
+															<td class="last">3,783</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">03월</th>
+														
+														
+															<td>4,833</td>
+															<td>5,532</td>
+															<td>3,673</td>
+															<td>3,497</td>
+															<td>4,451</td>
+															<td>4,736</td>
+															<td class="last">4,287</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">04월</th>
+														
+														
+															<td>4,391</td>
+															<td>5,442</td>
+															<td>4,402</td>
+															<td>3,923</td>
+															<td>4,978</td>
+															<td>5,211</td>
+															<td class="last">4,864</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">05월</th>
+														
+														
+															<td>3,369</td>
+															<td>3,755</td>
+															<td>3,814</td>
+															<td>4,069</td>
+															<td>4,634</td>
+															<td>3,736</td>
+															<td class="last">3,879</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">06월</th>
+														
+														
+															<td>3,691</td>
+															<td>3,440</td>
+															<td>3,560</td>
+															<td>3,786</td>
+															<td>4,134</td>
+															<td>3,213</td>
+															<td class="last">3,595</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">07월</th>
+														
+														
+															<td>3,667</td>
+															<td>4,598</td>
+															<td>4,824</td>
+															<td>4,134</td>
+															<td>5,637</td>
+															<td>3,390</td>
+															<td class="last">4,519</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">08월</th>
+														
+														
+															<td>4,910</td>
+															<td>6,653</td>
+															<td>6,397</td>
+															<td>5,570</td>
+															<td>6,687</td>
+															<td>4,393</td>
+															<td class="last">6,207</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">09월</th>
+														
+														
+															<td>5,929</td>
+															<td>6,480</td>
+															<td>8,172</td>
+															<td>5,718</td>
+															<td>9,061</td>
+															<td>5,396</td>
+															<td class="last">6,790</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">10월</th>
+														
+														
+															<td>6,007</td>
+															<td>5,774</td>
+															<td>8,240</td>
+															<td>6,170</td>
+															<td>5,966</td>
+															<td>4,280</td>
+															<td class="last">5,970</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">11월</th>
+														
+														
+															<td>-</td>
+															<td>3,670</td>
+															<td>3,627</td>
+															<td>2,956</td>
+															<td>3,416</td>
+															<td>4,409</td>
+															<td class="last">3,571</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">12월</th>
+														
+														
+															<td>-</td>
+															<td>4,742</td>
+															<td>4,327</td>
+															<td>3,019</td>
+															<td>2,886</td>
+															<td>4,217</td>
+															<td class="last">3,854</td>
+														
+														
+														
+													</tr>
+												
+													<tr>
+														
+														<th scope="col" class="first cell_tit1 lvl1">연평균</th>
+														
+														
+															<td>4,556</td>
+															<td>5,031</td>
+															<td>4,764</td>
+															<td>4,063</td>
+															<td>5,008</td>
+															<td>4,153</td>
+															<td class="last">4,642</td>
+														
+														
+														
+													</tr>
+												
+												
+											</tbody>
+										
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
