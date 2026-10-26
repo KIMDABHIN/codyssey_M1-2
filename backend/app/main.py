@@ -1,4 +1,8 @@
+
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 
 from app.routers.prices import router as prices_router
 
@@ -12,11 +16,14 @@ app = FastAPI(
 app.include_router(prices_router)
 
 
+# 프로젝트 폴더와 웹페이지 파일 위치 설정
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+FRONTEND_FILE = PROJECT_ROOT / "frontend" / "index.html"
+
+
 @app.get("/")
 def read_root():
-    return {
-        "message": "AI 농산물 가격 리포트 API가 실행 중입니다."
-    }
+    return FileResponse(FRONTEND_FILE)
 
 
 @app.get("/health")
