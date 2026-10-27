@@ -299,33 +299,89 @@ async function analyzeSelected(){
   }
 }
 
-function renderPrice(d,month){
-  const price=findVal(d,['가격','price','current_price']);
-  const mom=findVal(d,['전월 대비 변화율(%)','전월 대비(%)','전월 대비','mom_change_pct','mom_pct']);
-  const yoy=findVal(d,['전년 동월 대비 변화율(%)','전년 동월 대비(%)','전년 동월 대비','yoy_change_pct','yoy_pct']);
-  const avg=findVal(d,['최근 3년 같은 달 평균 대비 변화율(%)','최근 3년 평균 대비(%)','3년 평균 대비 변화율(%)','평균 대비 변화율(%)','평균 대비','avg_change_pct']);
 
-  setText('currentPrice',price===null?'자료 없음':fmtNum(price));
-  setText('priceUnit',month+' 기준 · 원본 데이터 단위');
-  setText('momValue',fmtPct(mom));
-  setText('yoyValue',fmtPct(yoy));
-  setText('avgValue',fmtPct(avg));
-  metricTone('momValue',mom);
-  metricTone('yoyValue',yoy);
-  metricTone('avgValue',avg);
+function renderPrice(d, month) {
+  // 가격 API 응답에서 분석 결과 객체를 찾습니다.
+  const result = d['분석 결과'] ?? d;
 
-  setText('momSub',mom===null?'비교 데이터가 없어요':Number(mom)>0?'전월보다 올랐어요':Number(mom)<0?'전월보다 내렸어요':'전월과 같아요');
-  setText('yoySub',yoy===null?'비교 데이터가 없어요':Number(yoy)>0?'작년 같은 달보다 올랐어요':Number(yoy)<0?'작년 같은 달보다 내렸어요':'작년 같은 달과 같아요');
-  setText('avgSub',avg===null?'비교 데이터가 없어요':Number(avg)>0?'최근 3년 평균보다 높아요':Number(avg)<0?'최근 3년 평균보다 낮아요':'최근 3년 평균과 같아요');
+  const price = findVal(result, ['가격', 'price', 'current_price']);
+  const mom = findVal(result, [
+    '전월 대비 변화율(%)',
+    '전월 대비(%)',
+    '전월 대비',
+    'mom_change_pct',
+    'mom_pct'
+  ]);
+  const yoy = findVal(result, [
+    '전년 동월 대비 변화율(%)',
+    '전년 동월 대비(%)',
+    '전년 동월 대비',
+    'yoy_change_pct',
+    'yoy_pct'
+  ]);
+  const avg = findVal(result, [
+    '최근 3년 평균 대비 변화율(%)',
+    '최근 3년 같은 달 평균 대비 변화율(%)',
+    '최근 3년 평균 대비(%)',
+    '3년 평균 대비 변화율(%)',
+    '평균 대비 변화율(%)',
+    '평균 대비',
+    'avg_change_pct'
+  ]);
 
-  const lines=[];
-  lines.push(`${month} ${selectedProduct} 가격은 ${price===null?'확인되지 않았어요':fmtNum(price)+' (원본 데이터 단위)'}입니다.`);
-  if(mom!==null)lines.push(`전월 대비 ${fmtPct(mom)} ${Number(mom)>0?'상승':Number(mom)<0?'하락':'변동 없음'}했어요.`);
-  if(yoy!==null)lines.push(`전년 동월과 비교하면 ${fmtPct(yoy)} ${Number(yoy)>0?'높은':Number(yoy)<0?'낮은':'같은'} 수준이에요.`);
-  if(avg!==null)lines.push(`최근 3년 같은 달 평균과 비교하면 ${fmtPct(avg)} 차이가 있어요.`);
-  lines.push('이 수치는 가격의 변화 방향을 보여주지만, 가격 변화의 원인을 확정하려면 생산량·출하량·기상 등 추가 데이터가 필요해요.');
-  setText('aiAnalysis',lines.join('\n\n'));
+  setText('currentPrice', price == null ? '자료 없음' : fmtNum(price));
+  setText('priceUnit', month + ' 기준 · 원본 데이터 단위');
+  setText('momValue', fmtPct(mom));
+  setText('yoyValue', fmtPct(yoy));
+  setText('avgValue', fmtPct(avg));
+
+  metricTone('momValue', mom);
+  metricTone('yoyValue', yoy);
+  metricTone('avgValue', avg);
+
+  setText(
+    'momSub',
+    mom == null ? '비교 데이터가 없어요' :
+      Number(mom) > 0 ? '전월보다 올랐어요' :
+      Number(mom) < 0 ? '전월보다 내렸어요' : '전월과 같아요'
+  );
+
+  setText(
+    'yoySub',
+    yoy == null ? '비교 데이터가 없어요' :
+      Number(yoy) > 0 ? '작년 같은 달보다 올랐어요' :
+      Number(yoy) < 0 ? '작년 같은 달보다 내렸어요' : '작년 같은 달과 같아요'
+  );
+
+  setText(
+    'avgSub',
+    avg == null ? '비교 데이터가 없어요' :
+      Number(avg) > 0 ? '최근 3년 평균보다 높아요' :
+      Number(avg) < 0 ? '최근 3년 평균보다 낮아요' : '최근 3년 평균과 같아요'
+  );
+
+  const lines = [];
+  lines.push(
+    `${month} ${selectedProduct} 가격은 ${
+      price == null ? '확인되지 않았어요' : fmtNum(price) + ' (원본 데이터 단위)'
+    }입니다.`
+  );
+
+  if (mom != null) {
+    lines.push(`전월 대비 ${fmtPct(mom)} ${Number(mom) > 0 ? '상승' : Number(mom) < 0 ? '하락' : '변동 없음'}했어요.`);
+  }
+
+  if (yoy != null) {
+    lines.push(`전년 동월과 비교하면 ${fmtPct(yoy)} ${Number(yoy) > 0 ? '높은' : Number(yoy) < 0 ? '낮은' : '같은'} 수준이에요.`);
+  }
+
+  if (avg != null) {
+    lines.push(`최근 3년 같은 달 평균과 비교하면 ${fmtPct(avg)} 차이가 있어요.`);
+  }
+
+  
 }
+
 
 async function loadPriceHistory(product){
   const requestId=++chartRequestId;
@@ -463,16 +519,40 @@ async function loadExplanation(product,month,priceData){
     const r=await fetch(`${API_BASE}/api/prices/explain?product=${encodeURIComponent(product)}&month=${encodeURIComponent(month)}`);
     if(!r.ok)throw new Error('해설 API를 사용할 수 없습니다.');
     const d=await r.json();
-    const explanation=findVal(d,['해설','AI 해설','분석','explanation','answer','message','result']);
+   const explanation = d['AI 해설'];
     if(explanation){
       setText('aiAnalysis',typeof explanation==='string'?explanation:JSON.stringify(explanation,null,2));
       status.textContent='AI 해설을 불러왔어요.';
     }else{
       status.textContent='가격 지표를 바탕으로 요약했어요.';
     }
-  }catch(e){
-    status.textContent='가격 지표를 바탕으로 요약했어요. (AI 해설 연결 상태를 확인해 주세요.)';
+ }catch(e){
+  const price = findVal(priceData, ['가격', 'price', 'current_price']);
+  const mom = findVal(priceData, ['전월 대비 변화율(%)', '전월 대비(%)', '전월 대비', 'mom_change_pct', 'mom_pct']);
+  const yoy = findVal(priceData, ['전년 동월 대비 변화율(%)', '전년 동월 대비(%)', '전년 동월 대비', 'yoy_change_pct', 'yoy_pct']);
+  const avg = findVal(priceData, ['최근 3년 평균 대비 변화율(%)', '최근 3년 같은 달 평균 대비 변화율(%)', '3년 평균 대비 변화율(%)', '평균 대비 변화율(%)', 'avg_change_pct']);
+
+  const lines = [];
+
+  if (price !== null) {
+    lines.push(`${month} 기준 가격은 ${price}입니다.`);
   }
+
+  if (mom !== null) {
+    lines.push(`전월 대비 ${Number(mom) > 0 ? '상승' : Number(mom) < 0 ? '하락' : '변동 없이'} ${Math.abs(Number(mom)).toFixed(2)}%입니다.`);
+  }
+
+  if (yoy !== null) {
+    lines.push(`전년 동월 대비 ${Number(yoy) > 0 ? '상승' : Number(yoy) < 0 ? '하락' : '변동 없이'} ${Math.abs(Number(yoy)).toFixed(2)}%입니다.`);
+  }
+
+  if (avg !== null) {
+    lines.push(`최근 3년 같은 달 평균 대비 ${Number(avg) > 0 ? '높고' : Number(avg) < 0 ? '낮은' : '비슷한'} 수준입니다.`);
+  }
+
+  setText('aiAnalysis', lines.length ? lines.join(' ') : '현재 가격 지표를 바탕으로 해설을 만들 수 없습니다.');
+  status.textContent = '가격 지표를 이용한 기본 해설이에요. AI 해설은 일시적으로 이용할 수 없습니다.';
+}
 }
 
 
