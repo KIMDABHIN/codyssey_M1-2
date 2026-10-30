@@ -95,6 +95,310 @@ button,input{font:inherit}button{cursor:pointer}
 .result-actions{align-items:stretch;flex-direction:column}.result-actions button{width:100%}
 }
 @media(min-width:721px) and (max-width:900px){.products{gap:7px}.product-card{padding:10px 5px}.product-emoji{height:65px;font-size:39px}.section{padding-left:4%;padding-right:4%}.metrics{gap:7px}.metric{padding:13px 10px}}
+/* AI 채팅 플로팅 버튼 */
+.chat-launchers {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.chat-launcher {
+  border: 1px solid #dfe7da;
+  background: #fffefa;
+  color: #365b45;
+  border-radius: 999px;
+  padding: 12px 17px;
+  box-shadow: 0 8px 26px #26372c20;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.chat-launcher.chat-main {
+  background: #365b45;
+  color: white;
+}
+
+/* 확장형 채팅 패널 */
+.chat-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 88px;
+  width: min(760px, calc(100vw - 32px));
+  height: min(590px, calc(100vh - 125px));
+  z-index: 999;
+  display: none;
+  background: #fffefa;
+  border: 1px solid #dfe7da;
+  border-radius: 20px;
+  box-shadow: 0 22px 70px #26372c30;
+  overflow: hidden;
+}
+
+.chat-panel.open {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-panel-head {
+  padding: 14px 17px;
+  background: #f7f8f1;
+  border-bottom: 1px solid #e7e9df;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-panel-title {
+  font-size: 14px;
+  font-weight: 850;
+  color: #365b45;
+}
+
+.chat-close {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: #e9eee4;
+  color: #365b45;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.chat-small-btn {
+  border: 1px solid #dfe4d9;
+  border-radius: 10px;
+  background: #fffefa;
+  color: #365b45;
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.chat-panel-actions {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+/* 왼쪽 대화 내역 + 오른쪽 채팅 */
+.chat-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+}
+
+.chat-history {
+  background: #f7f7f0;
+  border-right: 1px solid #e7e9df;
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.chat-history-title {
+  font-size: 11px;
+  font-weight: 850;
+  color: #536655;
+  margin-bottom: 10px;
+}
+
+.chat-history-list {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.chat-history-item {
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 10px;
+  text-align: left;
+  padding: 10px;
+  color: #536255;
+  font-size: 11px;
+  line-height: 1.5;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.chat-history-item:hover,
+.chat-history-item.active {
+  background: #e8eee2;
+  border-color: #cbd9c5;
+  color: #365b45;
+}
+
+.chat-history-empty {
+  font-size: 11px;
+  color: #879184;
+  line-height: 1.7;
+}
+
+/* 채팅 영역 */
+.chat-main-area {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.chat-message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-welcome {
+  margin: auto;
+  text-align: center;
+  max-width: 290px;
+  color: #7c877d;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.chat-welcome strong {
+  display: block;
+  color: #365b45;
+  font-size: 16px;
+  margin-bottom: 7px;
+}
+
+.chat-bubble {
+  max-width: 88%;
+  padding: 11px 13px;
+  border-radius: 14px;
+  font-size: 12px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background: #e8eee2;
+  color: #26372c;
+}
+
+.chat-bubble.assistant {
+  align-self: flex-start;
+  background: #f4f4ed;
+  color: #354438;
+}
+
+.chat-bubble.system {
+  align-self: center;
+  background: #fff3e8;
+  color: #8a6244;
+  font-size: 11px;
+}
+
+.chat-input-area {
+  padding: 12px;
+  border-top: 1px solid #e7e9df;
+  background: #fbfaf4;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.chat-input {
+  flex: 1;
+  min-width: 0;
+  resize: none;
+  min-height: 42px;
+  max-height: 110px;
+  border: 1px solid #dfe4d9;
+  border-radius: 12px;
+  padding: 11px 12px;
+  outline: none;
+  background: #fffefa;
+  color: #26372c;
+  font-size: 12px;
+}
+
+.chat-send {
+  border: 0;
+  border-radius: 12px;
+  background: #365b45;
+  color: white;
+  padding: 0 16px;
+  height: 42px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.chat-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chat-hint {
+  font-size: 10px;
+  color: #899187;
+  margin-top: 7px;
+}
+
+.chat-loading {
+  font-size: 11px;
+  color: #7c877d;
+  align-self: flex-start;
+}
+
+/* 모바일 */
+@media (max-width: 620px) {
+  .chat-launchers {
+    right: 13px;
+    bottom: 14px;
+  }
+
+  .chat-panel {
+    right: 8px;
+    bottom: 75px;
+    width: calc(100vw - 16px);
+    height: min(620px, calc(100vh - 90px));
+  }
+
+  .chat-layout {
+    grid-template-columns: 112px minmax(0, 1fr);
+  }
+
+  .chat-history {
+    padding: 9px;
+  }
+
+  .chat-history-item {
+    padding: 8px;
+    font-size: 10px;
+  }
+
+  .chat-message-list {
+    padding: 12px;
+  }
+
+  .chat-bubble {
+    max-width: 95%;
+    font-size: 11px;
+  }
+}
 </style>
 </head>
 <body>
@@ -211,7 +515,113 @@ button,input{font:inherit}button{cursor:pointer}
         </div>
       </section>
     </div>
-  </main>
+  
+    <!-- AI 채팅 플로팅 버튼 -->
+<div class="chat-launchers">
+  <button
+    class="chat-launcher"
+    type="button"
+    onclick="openChatPanel('history')">
+    📚 대화 내역
+  </button>
+
+  <button
+    class="chat-launcher chat-main"
+    type="button"
+    onclick="openChatPanel('chat')">
+    💬 AI 채팅
+  </button>
+</div>
+
+<!-- 확장형 채팅 패널 -->
+<section class="chat-panel" id="chatPanel">
+
+  <header class="chat-panel-head">
+    <div class="chat-panel-title">
+      🌿 AGRI INSIGHT AI 상담
+    </div>
+
+    <div class="chat-panel-actions">
+      <button
+        class="chat-small-btn"
+        type="button"
+        onclick="startNewChat()">
+        ＋ 새 대화
+      </button>
+
+      <button
+        class="chat-close"
+        type="button"
+        onclick="closeChatPanel()">
+        ×
+      </button>
+    </div>
+  </header>
+
+  <div class="chat-layout">
+
+    <!-- 왼쪽 대화 내역 -->
+    <aside class="chat-history">
+      <div class="chat-history-title">
+        📚 이전 대화
+      </div>
+
+      <div
+        class="chat-history-list"
+        id="chatHistoryList">
+        <div class="chat-history-empty">
+          대화 내역을 불러오는 중이에요.
+        </div>
+      </div>
+    </aside>
+
+    <!-- 오른쪽 채팅 화면 -->
+    <section class="chat-main-area">
+
+      <div
+        class="chat-message-list"
+        id="chatMessageList">
+
+        <div class="chat-welcome">
+          <strong>안녕하세요!</strong>
+          농산물 가격이나 시세가 궁금하다면
+          편하게 질문해 주세요.
+        </div>
+
+      </div>
+
+      <form
+        class="chat-input-area"
+        id="chatForm"
+        onsubmit="sendChatMessage(event)">
+
+        <div class="chat-input-row">
+
+          <textarea
+            class="chat-input"
+            id="chatInput"
+            rows="1"
+            placeholder="농산물에 대해 질문해 보세요...">
+          </textarea>
+
+          <button
+            class="chat-send"
+            id="chatSendButton"
+            type="submit">
+            전송 ↑
+          </button>
+
+        </div>
+
+        <div class="chat-hint" id="chatStatus">
+          AI 답변은 제공된 데이터 범위 안에서 확인해 드려요.
+        </div>
+
+      </form>
+
+    </section>
+  </div>
+</section>
   <div style="font-size:11px;color:#8a9488;letter-spacing:.02em">A little more insight for your everyday table.</div>
 </div>
 
@@ -629,7 +1039,330 @@ async function loadForecast(product, month) {
     setText('forecastError', error.message || '알 수 없는 오류가 발생했습니다.');
   }
 }
+/* =================================
+   AI 채팅 및 대화 내역
+================================= */
 
+let currentConversationId = null;
+let chatIsSending = false;
+
+
+// 채팅창 열기
+function openChatPanel(mode = 'chat') {
+  document.getElementById('chatPanel').classList.add('open');
+
+  loadConversationHistory();
+
+  if (mode === 'chat') {
+    document.getElementById('chatInput').focus();
+  }
+}
+
+
+// 채팅창 닫기
+function closeChatPanel() {
+  document.getElementById('chatPanel').classList.remove('open');
+}
+
+
+// 메시지 화면 출력
+function renderChatMessages(messages) {
+  const container =
+    document.getElementById('chatMessageList');
+
+  if (!Array.isArray(messages) || messages.length === 0) {
+    container.innerHTML = `
+      <div class="chat-welcome">
+        <strong>새 대화를 시작해 보세요!</strong>
+        농산물 가격에 대해 궁금한 점을 질문해 주세요.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = messages.map(message => {
+    const role =
+      message.role === 'user' ? 'user' : 'assistant';
+
+    return `
+      <div class="chat-bubble ${role}">
+        ${escapeHtml(message.content || '')}
+      </div>
+    `;
+  }).join('');
+
+  container.scrollTop = container.scrollHeight;
+}
+
+
+// 대화 목록 불러오기
+async function loadConversationHistory() {
+  const list =
+    document.getElementById('chatHistoryList');
+
+  list.innerHTML = `
+    <div class="chat-history-empty">
+      대화 내역을 불러오는 중이에요.
+    </div>
+  `;
+
+  try {
+    const response = await fetch(
+      `${API_BASE}/api/conversations`
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error('대화 내역을 불러오지 못했습니다.');
+    }
+
+    const conversations =
+      Array.isArray(result.data) ? result.data : [];
+
+    if (conversations.length === 0) {
+      list.innerHTML = `
+        <div class="chat-history-empty">
+          아직 저장된 대화가 없습니다.
+        </div>
+      `;
+      return;
+    }
+
+    list.innerHTML = conversations.map(item => {
+      const id = Number(item.id);
+      const title = escapeHtml(
+        item.title || '새로운 대화'
+      );
+
+      const active =
+        Number(currentConversationId) === id
+          ? 'active'
+          : '';
+
+      return `
+        <button
+          type="button"
+          class="chat-history-item ${active}"
+          onclick="loadConversation(${id})">
+          ${title}
+        </button>
+      `;
+    }).join('');
+
+  } catch (error) {
+    list.innerHTML = `
+      <div class="chat-history-empty">
+        대화 목록을 불러오지 못했습니다.
+      </div>
+    `;
+  }
+}
+
+
+// 기존 대화 불러오기
+async function loadConversation(id) {
+  const status =
+    document.getElementById('chatStatus');
+
+  status.textContent = '이전 대화를 불러오고 있어요...';
+
+  try {
+    const response = await fetch(
+      `${API_BASE}/api/conversations/${id}`
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error('대화를 불러오지 못했습니다.');
+    }
+
+    const conversation =
+      result.data || result.conversation || result;
+
+    currentConversationId =
+      Number(conversation.id || id);
+
+    renderChatMessages(
+      conversation.messages || []
+    );
+
+    status.textContent =
+      '이전 대화를 불러왔어요. 이어서 질문할 수 있습니다.';
+
+    await loadConversationHistory();
+
+  } catch (error) {
+    status.textContent = error.message;
+  }
+}
+
+
+// 새 대화 시작
+function startNewChat() {
+  currentConversationId = null;
+
+  renderChatMessages([]);
+
+  document.getElementById('chatStatus').textContent =
+    '새 대화를 시작합니다.';
+
+  loadConversationHistory();
+
+  document.getElementById('chatInput').focus();
+}
+
+
+// AI에게 질문 전송
+async function sendChatMessage(event) {
+  event.preventDefault();
+
+  if (chatIsSending) return;
+
+  const input =
+    document.getElementById('chatInput');
+
+  const message = input.value.trim();
+
+  if (!message) {
+    input.focus();
+    return;
+  }
+
+  chatIsSending = true;
+
+  const button =
+    document.getElementById('chatSendButton');
+
+  const status =
+    document.getElementById('chatStatus');
+
+  const container =
+    document.getElementById('chatMessageList');
+
+  button.disabled = true;
+  button.textContent = '전송 중';
+
+  status.textContent =
+    'Gemini가 답변을 준비하고 있어요. 잠시만 기다려 주세요.';
+
+  const welcome =
+    container.querySelector('.chat-welcome');
+
+  if (welcome) welcome.remove();
+
+  // 사용자 메시지 표시
+  const userBubble = document.createElement('div');
+
+  userBubble.className = 'chat-bubble user';
+  userBubble.textContent = message;
+
+  container.appendChild(userBubble);
+
+  // 로딩 표시
+  const loading = document.createElement('div');
+
+  loading.className = 'chat-loading';
+  loading.textContent = 'AI가 답변을 작성하고 있어요…';
+
+  container.appendChild(loading);
+
+  container.scrollTop = container.scrollHeight;
+
+  input.value = '';
+
+  try {
+    const response = await fetch(
+      `${API_BASE}/api/chat`,
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({
+          message: message,
+          conversation_id: currentConversationId
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result.detail || 'AI 답변을 받지 못했습니다.'
+      );
+    }
+
+    currentConversationId =
+      result.conversation_id;
+
+    loading.remove();
+
+    // AI 답변 표시
+    const answerBubble =
+      document.createElement('div');
+
+    answerBubble.className =
+      'chat-bubble assistant';
+
+    answerBubble.textContent =
+      result.answer || '답변 내용이 없습니다.';
+
+    container.appendChild(answerBubble);
+
+    container.scrollTop =
+      container.scrollHeight;
+
+    status.textContent = '답변을 받았어요.';
+
+    // 대화 목록 새로고침
+    await loadConversationHistory();
+
+  } catch (error) {
+    loading.remove();
+
+    const errorBubble =
+      document.createElement('div');
+
+    errorBubble.className =
+      'chat-bubble system';
+
+    errorBubble.textContent =
+      error.message + ' 잠시 후 다시 시도해 주세요.';
+
+    container.appendChild(errorBubble);
+
+    status.textContent =
+      '응답을 받지 못했어요. 질문을 다시 시도해 주세요.';
+
+  } finally {
+    chatIsSending = false;
+
+    button.disabled = false;
+    button.textContent = '전송 ↑';
+
+    input.focus();
+  }
+}
+
+
+// Enter 전송 / Shift + Enter 줄바꿈
+document.getElementById('chatInput')
+  .addEventListener('keydown', function(event) {
+
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+
+      document
+        .getElementById('chatForm')
+        .requestSubmit();
+    }
+
+  });
 document.getElementById('monthInput').value = '2026-08';
 </script>
 </body>

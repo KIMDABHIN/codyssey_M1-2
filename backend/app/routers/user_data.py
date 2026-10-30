@@ -151,3 +151,73 @@ def delete_user_data(data_id: int):
             status_code=500,
             detail=f"데이터 삭제 실패: {str(e)}",
         ) from e
+@router.get("/summary")
+def get_user_data_summary():
+    """저장된 사용자 데이터의 요약 정보를 제공한다."""
+    try:
+        supabase = get_supabase_client()
+
+        result = (
+            supabase.table("user_data")
+            .select("date, value, memo")
+            .order("date", desc=False)
+            .execute()
+        )
+
+        records = result.data
+
+        if not records:
+            return {
+                "message": "저장된 데이터가 없습니다.",
+                "count": 0,
+                "period": None,
+                "average": None,
+                "maximum": None,
+                "minimum": None,
+                "trend": "데이터 없음",
+            }
+
+        values = [float(record["value"]) for record in records]
+
+        average = sum(values) / len(values)
+
+        maximum_record = max(records, key=lambda x: float(x["value"]))
+        minimum_record = min(records, key=lambda x: float(x["value"]))
+
+        if len(records) < 2:
+            trend = "데이터 부족"
+        else:
+            previous_value = float(records[-2]["value"])
+            latest_value = float(records[-1]["value"])
+
+            if latest_value > previous_value:
+                trend = "증가"
+            elif latest_value < previous_value:
+                trend = "감소"
+            else:
+                trend = "유지"
+
+        return {
+            "message": "데이터 요약 조회 성공",
+            "count": len(records),
+            "period": {
+                "start": records[0]["date"],
+                "end": records[-1]["date"],
+            },
+            "average": round(average, 2),
+            "maximum": {
+                "date": maximum_record["date"],
+                "value": float(maximum_record["value"]),
+            },
+            "minimum": {
+                "date": minimum_record["date"],
+                "value": float(minimum_record["value"]),
+            },
+            "trend": trend,
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"데이터 요약 조회 실패: {str(e)}",
+        ) from e
