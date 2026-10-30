@@ -1,12 +1,13 @@
+from pathlib import Path
 
-<!DOCTYPE html>
+html = r'''<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>농산물 물가 분석</title>
 <style>
-:root{--cream:#f7f5ed;--paper:#fffefa;--green:#365b45;--sage:#dce8d8;--mint:#eef4e9;--ink:#26372c;--muted:#7c877d;--line:#e7e9df;--yellow:#f2d88b}
+:root{--cream:#f7f5ed;--paper:#fffefa;--green:#365b45;--sage:#dce8d8;--mint:#eef4e9;--ink:#26372c;--muted:#7c877d;--line:#e7e9df}
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(ellipse at 50% 0%,#fffdf5 0,#f2f0e7 65%,#e9e8de 100%);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:var(--ink);min-height:100vh}
 button,input{font:inherit}button{cursor:pointer}
@@ -14,20 +15,18 @@ button,input{font:inherit}button{cursor:pointer}
 .brand{display:flex;align-items:center;gap:9px;font-size:13px;letter-spacing:.13em;font-weight:800;color:var(--green)}
 .brand-mark{width:28px;height:28px;background:var(--green);color:#fff;border-radius:10px;display:grid;place-items:center;font-size:15px}
 .site-shell{width:min(1160px,100%);background:var(--cream);border:1px solid #e7e8df;border-radius:24px;overflow:hidden;box-shadow:0 24px 70px #273b2a12}
-.screen{min-height:600px;background:var(--cream);overflow:hidden;position:relative}
+.screen{min-height:600px;background:var(--cream);position:relative}
 .screen-nav{height:60px;padding:0 5.5%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e9e9df;background:#fbfaf4;position:sticky;top:0;z-index:5}
 .nav-brand{display:flex;gap:9px;align-items:center;font-weight:800;font-size:14px}
 .nav-brand .brand-mark{width:25px;height:25px;border-radius:8px;font-size:13px}
 .nav-note{font-size:11px;color:var(--muted)}
-.view{display:none;animation:fade .3s ease}
-.view.active{display:block}
+.view{display:none;animation:fade .3s ease}.view.active{display:block}
 @keyframes fade{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .landing{min-height:520px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:24px;padding:6% 8%}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;background:#e8eee2;border-radius:999px;color:var(--green);font-size:11px;font-weight:750}
 .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:#83a17b}
 .landing h1{font-size:clamp(34px,4.6vw,61px);letter-spacing:-.065em;line-height:1.16;margin:22px 0 16px;font-weight:850}
-.landing h1 span{color:#6b8b66}
-.landing p{font-size:14px;line-height:1.9;color:#737e73;max-width:430px;margin:0 0 26px}
+.landing h1 span{color:#6b8b66}.landing p{font-size:14px;line-height:1.9;color:#737e73;max-width:430px;margin:0 0 26px}
 .primary{border:0;border-radius:13px;background:var(--green);color:white;padding:14px 21px;font-size:13px;font-weight:750;box-shadow:0 8px 18px #365b4520;transition:.2s}
 .primary:hover{background:#294b37;transform:translateY(-1px)}
 .secondary{border:1px solid #dfe4d9;border-radius:12px;background:#fffefa;color:var(--green);padding:12px 17px;font-size:12px;font-weight:700}
@@ -36,8 +35,7 @@ button,input{font:inherit}button{cursor:pointer}
 .produce-bowl{position:relative;width:230px;height:150px;border-radius:25px 25px 95px 95px;background:linear-gradient(145deg,#c4d4ad,#8da77f);transform:rotate(-5deg);box-shadow:0 25px 35px #5c76502b;display:flex;align-items:center;justify-content:center;gap:3px;border:5px solid #dce5d1}
 .veg{font-size:65px;filter:drop-shadow(0 7px 5px #42533b22)}
 .floating-note{position:absolute;background:#fffefa;border:1px solid #eceee4;box-shadow:0 12px 28px #253c2417;border-radius:15px;padding:13px 16px;font-size:11px}
-.floating-note strong{display:block;font-size:14px;margin-top:5px}
-.note-top{top:16%;left:0}.note-bottom{bottom:13%;right:0}.note-icon{font-size:18px;margin-right:5px}
+.floating-note strong{display:block;font-size:14px;margin-top:5px}.note-top{top:16%;left:0}.note-bottom{bottom:13%;right:0}.note-icon{font-size:18px;margin-right:5px}
 .section{padding:30px 5.5% 42px}
 .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin:14px 0 23px}
 .section-head h2{font-size:clamp(23px,3vw,32px);letter-spacing:-.045em;margin:7px 0}
@@ -52,44 +50,35 @@ button,input{font:inherit}button{cursor:pointer}
 .product-card.selected{border:2px solid var(--green);background:#f0f5ec;padding:13px 8px 12px;box-shadow:0 7px 17px #365b4512}
 .product-emoji{height:82px;border-radius:13px;background:var(--mint);display:grid;place-items:center;font-size:47px;margin-bottom:12px}
 .product-card:nth-child(2n) .product-emoji{background:#f5f0e1}
-.product-card strong{font-size:13px;display:block}
-.product-card small{font-size:10px;color:#899187;display:block;margin-top:5px}
+.product-card strong{font-size:13px;display:block}.product-card small{font-size:10px;color:#899187;display:block;margin-top:5px}
 .selection-bottom{display:flex;align-items:end;gap:14px;margin-top:24px;padding:18px;background:#f0f1e8;border-radius:17px}
 .field{display:flex;flex-direction:column;gap:8px;flex:1}
 .field label{font-size:11px;font-weight:750;color:#536655}
 .field input{border:1px solid #dfe3d8;background:#fffefa;border-radius:11px;padding:12px;color:var(--ink);outline:none}
-.selection-bottom .primary{white-space:nowrap}
-.hint{font-size:10px;color:var(--muted);margin-top:12px;line-height:1.6}
+.selection-bottom .primary{white-space:nowrap}.hint{font-size:10px;color:var(--muted);margin-top:12px;line-height:1.6}
+.panel{background:#fffefa;border:1px solid #e9eae2;border-radius:17px;padding:18px;min-width:0}
+.panel h3{font-size:13px;margin:0 0 7px}.panel .sub{font-size:10px;color:var(--muted);line-height:1.6}
+.status{font-size:11px;color:#7b8978;margin-top:10px;min-height:16px}
+.record-search{display:flex;gap:10px;margin-top:14px}.record-search input{flex:1;min-width:0;border:1px solid #dfe3d8;background:#fffefa;border-radius:11px;padding:12px;color:var(--ink)}
+.record-item{margin-top:12px;padding:16px}.record-item p{font-size:12px;margin:8px 0}.record-buttons{display:flex;gap:8px;margin-top:12px}
 .result-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
-.result-top h2{font-size:27px;letter-spacing:-.05em;margin:5px 0}
-.result-top p{font-size:11px;color:var(--muted);margin:0}
+.result-top h2{font-size:27px;letter-spacing:-.05em;margin:5px 0}.result-top p{font-size:11px;color:var(--muted);margin:0}
 .pill{border-radius:999px;background:#e9efe4;color:var(--green);padding:8px 11px;font-size:10px;font-weight:800;white-space:nowrap}
 .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
 .metric{background:#fffefa;border:1px solid #e9eae2;border-radius:16px;padding:16px 14px;min-width:0}
-.metric-label{font-size:10px;color:#7c887c;margin-bottom:13px}
-.metric-value{font-size:clamp(17px,2.2vw,25px);font-weight:850;letter-spacing:-.04em;overflow-wrap:anywhere}
+.metric-label{font-size:10px;color:#7c887c;margin-bottom:13px}.metric-value{font-size:clamp(17px,2.2vw,25px);font-weight:850;letter-spacing:-.04em;overflow-wrap:anywhere}
 .metric-sub{font-size:10px;color:#7c887c;margin-top:7px;line-height:1.5}
 .dashboard-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:12px;margin-top:13px}
-.panel{background:#fffefa;border:1px solid #e9eae2;border-radius:17px;padding:18px;min-width:0}
-.panel h3{font-size:13px;margin:0 0 7px}
-.panel .sub{font-size:10px;color:var(--muted);line-height:1.6}
 .analysis-copy{font-size:12px;line-height:1.9;color:#536255;margin-top:15px;white-space:pre-wrap}
-.chart-wrap{margin-top:14px;min-width:0}
-.chart-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.chart-meta strong{font-size:12px;color:var(--green)}
-.chart-meta span{font-size:10px;color:var(--muted)}
-.chart-canvas{width:100%;min-height:180px;position:relative}
-.chart-canvas svg{display:block;width:100%;height:auto;overflow:visible}
+.chart-wrap{margin-top:14px;min-width:0}.chart-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.chart-meta strong{font-size:12px;color:var(--green)}.chart-meta span{font-size:10px;color:var(--muted)}
+.chart-canvas{width:100%;min-height:180px;position:relative}.chart-canvas svg{display:block;width:100%;height:auto;overflow:visible}
 .chart-tooltip{font-size:11px;color:#fff;background:#365b45;border-radius:8px;padding:8px 10px;margin-top:8px;min-height:31px}
 .chart-status{font-size:10px;line-height:1.7;color:var(--muted);margin-top:8px;min-height:16px}
-.chart-point{cursor:pointer;outline:none}
-.chart-point:focus circle{stroke:#26372c;stroke-width:3}
+.chart-point{cursor:pointer;outline:none}.chart-point:focus circle{stroke:#26372c;stroke-width:3}
 .forecast-line{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f0f5ec;border-radius:13px;padding:13px;margin-top:13px}
-.forecast-line small{font-size:10px;color:#657663}
-.forecast-line strong{font-size:19px;color:var(--green)}
+.forecast-line small{font-size:10px;color:#657663}.forecast-line strong{font-size:19px;color:var(--green)}
 .error-note{font-size:10px;line-height:1.7;color:#8a9188;margin-top:12px}
-.loading{opacity:.65;pointer-events:none}
-.status{font-size:11px;color:#7b8978;margin-top:10px;min-height:16px}
 .result-actions{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:18px}
 .footer{font-size:10px;color:#929b91;text-align:center;margin-top:18px}
 @media(max-width:720px){
@@ -105,10 +94,7 @@ button,input{font:inherit}button{cursor:pointer}
 .screen-nav{height:50px;padding:0 5%}.nav-note{font-size:9px}
 .result-actions{align-items:stretch;flex-direction:column}.result-actions button{width:100%}
 }
-@media(min-width:721px) and (max-width:900px){
-.products{gap:7px}.product-card{padding:10px 5px}.product-emoji{height:65px;font-size:39px}
-.section{padding-left:4%;padding-right:4%}.metrics{gap:7px}.metric{padding:13px 10px}
-}
+@media(min-width:721px) and (max-width:900px){.products{gap:7px}.product-card{padding:10px 5px}.product-emoji{height:65px;font-size:39px}.section{padding-left:4%;padding-right:4%}.metrics{gap:7px}.metric{padding:13px 10px}}
 </style>
 </head>
 <body>
@@ -157,6 +143,30 @@ button,input{font:inherit}button{cursor:pointer}
             <button class="primary" onclick="analyzeSelected()">분석하기 <span style="margin-left:12px">→</span></button>
           </div>
           <div class="hint">※ 제공된 월별 가격 데이터를 바탕으로 분석합니다. 품목에 따라 확인 가능한 기간이 다를 수 있어요.</div>
+
+          <div class="panel" id="userRecordsPanel" style="margin-top:24px">
+            <h3>📝 나의 가격 기록</h3>
+            <div class="sub">직접 확인한 농산물 가격과 메모를 저장하고 관리할 수 있어요.</div>
+            <div class="selection-bottom" style="margin-top:16px">
+              <div class="field"><label for="recordDate">기록 날짜</label><input type="date" id="recordDate"></div>
+              <div class="field"><label for="recordValue">가격</label><input type="number" id="recordValue" min="0" step="0.01" placeholder="가격 입력"></div>
+            </div>
+            <div class="field" style="margin-top:12px">
+              <label for="recordMemo">메모</label>
+              <input type="text" id="recordMemo" placeholder="예: 시장에서 확인한 양파 가격">
+            </div>
+            <button class="primary" onclick="saveUserRecord()" style="margin-top:14px">기록 저장하기 +</button>
+            <div class="status" id="recordStatus"></div>
+            <div style="margin-top:24px">
+              <h3>저장된 기록</h3>
+              <div class="sub">내가 입력한 가격 기록을 확인하고 수정하거나 삭제할 수 있어요.</div>
+              <div class="record-search">
+                <input type="search" id="recordSearch" placeholder="메모 검색하기 (예: 양파, 시장, 가격)" oninput="loadUserRecords()">
+                <button class="secondary" onclick="resetRecordSearch()">초기화</button>
+              </div>
+              <div id="userRecordsList" style="margin-top:14px">저장된 기록을 불러오는 중이에요.</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -166,43 +176,29 @@ button,input{font:inherit}button{cursor:pointer}
             <div><div class="step">STEP 02 / YOUR REPORT</div><h2 id="resultTitle">감자 가격 리포트</h2><p id="resultSubtitle">선택한 월의 가격 흐름을 확인해 보세요.</p></div>
             <span class="pill" id="reportPill">MONTHLY REPORT</span>
           </div>
-
           <div class="metrics">
             <div class="metric"><div class="metric-label">선택한 월 가격</div><div class="metric-value" id="currentPrice">—</div><div class="metric-sub" id="priceUnit">조회한 월 기준</div></div>
             <div class="metric"><div class="metric-label">전월 대비</div><div class="metric-value" id="momValue">—</div><div class="metric-sub" id="momSub">직전 월과 비교</div></div>
             <div class="metric"><div class="metric-label">전년 동월 대비</div><div class="metric-value" id="yoyValue">—</div><div class="metric-sub" id="yoySub">작년 같은 달과 비교</div></div>
             <div class="metric"><div class="metric-label">최근 3년 같은 달 평균 대비</div><div class="metric-value" id="avgValue">—</div><div class="metric-sub" id="avgSub">가능한 과거 데이터 기준</div></div>
           </div>
-
           <div class="dashboard-grid">
+            <div class="panel"><h3>AI 가격 해설</h3><div class="sub">가격 변화에서 확인할 수 있는 점을 정리했어요.</div><div class="analysis-copy" id="aiAnalysis">가격 데이터를 불러오면 분석 내용이 표시됩니다.</div><div class="status" id="analysisStatus"></div></div>
             <div class="panel">
-              <h3>AI 가격 해설</h3>
-              <div class="sub">가격 변화에서 확인할 수 있는 점을 정리했어요.</div>
-              <div class="analysis-copy" id="aiAnalysis">가격 데이터를 불러오면 분석 내용이 표시됩니다.</div>
-              <div class="status" id="analysisStatus"></div>
-            </div>
-            <div class="panel">
-              <h3>월별 가격 추이</h3>
-              <div class="sub">선택한 품목의 실제 월별 가격 흐름입니다.</div>
-              <div class="chart-wrap">
-                <div class="chart-meta"><strong id="chartProductTitle">감자 월별 가격</strong><span id="chartRange">데이터를 불러오는 중</span></div>
+              <h3>월별 가격 추이</h3><div class="sub">선택한 품목의 실제 월별 가격 흐름입니다.</div>
+              <div class="chart-wrap"><div class="chart-meta"><strong id="chartProductTitle">감자 월별 가격</strong><span id="chartRange">데이터를 불러오는 중</span></div>
                 <div id="priceChart" class="chart-canvas" aria-label="월별 농산물 가격 선 그래프"></div>
                 <div id="chartTooltip" class="chart-tooltip" aria-live="polite">그래프의 점을 선택하면 해당 월의 가격을 확인할 수 있어요.</div>
                 <div id="chartStatus" class="chart-status">가격 데이터를 불러오는 중이에요.</div>
               </div>
             </div>
           </div>
-
           <div class="dashboard-grid">
-            <div class="panel">
-              <h3>다음 달 가격 전망</h3>
-              <div class="sub" id="forecastMonth">예측 결과를 불러오는 중이에요.</div>
+            <div class="panel"><h3>다음 달 가격 전망</h3><div class="sub" id="forecastMonth">예측 결과를 불러오는 중이에요.</div>
               <div class="forecast-line"><div><small>기준 예측 가격</small><div class="sub" id="forecastMethod">과거 가격 패턴을 활용한 참고용 예측</div></div><strong id="forecastPrice">—</strong></div>
               <div class="error-note" id="forecastError">예측은 참고 정보이며 실제 가격을 보장하지 않습니다.</div>
             </div>
-            <div class="panel">
-              <h3>예측 정확도 참고</h3>
-              <div class="sub">과거 데이터를 이용해 계산한 오차 지표예요.</div>
+            <div class="panel"><h3>예측 정확도 참고</h3><div class="sub">과거 데이터를 이용해 계산한 오차 지표예요.</div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
                 <div style="background:#f6f6ef;border-radius:12px;padding:13px"><div class="metric-label">MAE · 평균 절대 오차</div><div class="metric-value" id="maeValue" style="font-size:20px">—</div></div>
                 <div style="background:#f6f6ef;border-radius:12px;padding:13px"><div class="metric-label">MAPE · 평균 오차율</div><div class="metric-value" id="mapeValue" style="font-size:20px">—</div></div>
@@ -210,7 +206,6 @@ button,input{font:inherit}button{cursor:pointer}
               <div class="error-note" id="validationCount">오차 지표는 과거 검증 구간의 결과입니다.</div>
             </div>
           </div>
-
           <div class="result-actions"><span class="hint" style="margin:0">※ 가격 변화만으로 원인을 단정할 수 없어요. 생산량·날씨 등 추가 자료가 필요합니다.</span><button class="primary" onclick="goToSelection()">다시 분석하기 ↻</button></div>
           <div class="footer">AGRI INSIGHT · 데이터 기반 농산물 가격 살펴보기</div>
         </div>
@@ -225,271 +220,334 @@ const API_BASE = '';
 let selectedProduct = '감자';
 let chartRequestId = 0;
 
-function showView(id){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+function showView(id) {
+  document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.getElementById('appScreen').scrollTop=0;
+  document.getElementById('appScreen').scrollTop = 0;
 }
-function goToSelection(){showView('selectionView')}
-function selectProduct(name,button){
-  selectedProduct=name;
-  document.querySelectorAll('.product-card').forEach(c=>c.classList.toggle('selected',c.dataset.product===name));
+
+function goToSelection() {
+  showView('selectionView');
+  loadUserRecords();
 }
-function filterProducts(){
-  const q=document.getElementById('productSearch').value.trim().toLowerCase();
-  document.querySelectorAll('.product-card').forEach(c=>{
-    c.style.display=c.dataset.product.toLowerCase().includes(q)?'':'none';
+
+function selectProduct(name) {
+  selectedProduct = name;
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.classList.toggle('selected', card.dataset.product === name);
   });
 }
-function fmtNum(v){
-  if(v===null||v===undefined||v===''||Number.isNaN(Number(v)))return '—';
-  return Number(v).toLocaleString('ko-KR',{maximumFractionDigits:2});
+
+function filterProducts() {
+  const keyword = document.getElementById('productSearch').value.trim().toLowerCase();
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.style.display = card.dataset.product.toLowerCase().includes(keyword) ? '' : 'none';
+  });
 }
-function findVal(obj,keys){
-  for(const k of keys)if(obj&&obj[k]!==undefined&&obj[k]!==null)return obj[k];
+
+function fmtNum(value) {
+  if (value === null || value === undefined || value === '' || Number.isNaN(Number(value))) return '—';
+  return Number(value).toLocaleString('ko-KR', { maximumFractionDigits: 2 });
+}
+
+function fmtPct(value) {
+  if (value === null || value === undefined || value === '' || Number.isNaN(Number(value))) return '자료 없음';
+  const number = Number(value);
+  return (number > 0 ? '+' : '') + number.toFixed(2) + '%';
+}
+
+function findVal(obj, keys) {
+  for (const key of keys) {
+    if (obj && obj[key] !== undefined && obj[key] !== null) return obj[key];
+  }
   return null;
 }
-function fmtPct(v){
-  if(v===null||v===undefined||v===''||Number.isNaN(Number(v)))return '자료 없음';
-  const n=Number(v);
-  return (n>0?'+':'')+n.toFixed(2)+'%';
-}
-function setText(id,value){
-  const el=document.getElementById(id);
-  if(el)el.textContent=value===null||value===undefined?'—':String(value);
-}
-function metricTone(id,v){
-  const el=document.getElementById(id);
-  el.style.color='#26372c';
-  if(v===null||v===undefined||Number.isNaN(Number(v)))return;
-  el.style.color=Number(v)>0?'#b05b45':Number(v)<0?'#4e7b54':'#26372c';
+
+function setText(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.textContent = value === null || value === undefined ? '—' : String(value);
 }
 
-async function analyzeSelected(){
-  const month=document.getElementById('monthInput').value;
-  if(!month){alert('분석할 월을 선택해 주세요.');return;}
+function metricTone(id, value) {
+  const element = document.getElementById(id);
+  element.style.color = '#26372c';
+  if (value === null || value === undefined || Number.isNaN(Number(value))) return;
+  element.style.color = Number(value) > 0 ? '#b05b45' : Number(value) < 0 ? '#4e7b54' : '#26372c';
+}
 
-  showView('resultsView');
-  setText('resultTitle',selectedProduct+' 가격 리포트');
-  setText('resultSubtitle',month+' 기준 가격 변화와 다음 달 전망');
-  setText('reportPill',month+' REPORT');
-  setText('currentPrice','불러오는 중…');
-  setText('aiAnalysis','가격 데이터를 불러오고 있어요.');
-  setText('analysisStatus','');
-  setText('forecastPrice','불러오는 중…');
-  setText('forecastMonth','예측 결과를 불러오는 중이에요.');
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[char]);
+}
 
-  // 그래프도 현재 선택한 품목으로 새로 불러온다.
-  loadPriceHistory(selectedProduct);
+// -------------------- 나의 가격 기록: 저장 --------------------
+async function saveUserRecord() {
+  const date = document.getElementById('recordDate').value;
+  const value = document.getElementById('recordValue').value;
+  const memo = document.getElementById('recordMemo').value;
+  const status = document.getElementById('recordStatus');
 
-  try{
-    const res=await fetch(`${API_BASE}/api/prices?product=${encodeURIComponent(selectedProduct)}&month=${encodeURIComponent(month)}`);
-    const data=await res.json();
-    if(!res.ok)throw new Error(data.detail||data.message||'가격 정보를 불러오지 못했습니다.');
-    renderPrice(data,month);
-    await loadExplanation(selectedProduct,month,data);
-    await loadForecast(selectedProduct,month);
-  }catch(err){
-    setText('currentPrice','조회 실패');
-    setText('aiAnalysis','가격 정보를 불러오지 못했어요. '+err.message+'\n\nAPI 서버가 실행 중인지, 선택한 월의 데이터가 있는지 확인해 주세요.');
-    setText('analysisStatus','API 연결 또는 해당 월 데이터 확인이 필요합니다.');
-    setText('forecastPrice','—');
-    setText('forecastMonth','예측 정보를 가져오지 못했어요.');
-    setText('forecastError',err.message);
+  if (!date || value === '' || Number(value) < 0 || !Number.isFinite(Number(value))) {
+    status.textContent = '날짜와 0 이상의 올바른 가격을 입력해 주세요.';
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE}/api/user-data`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date, value: Number(value), memo })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.detail || '저장에 실패했습니다.');
+
+    status.textContent = '기록이 저장되었습니다!';
+    document.getElementById('recordDate').value = '';
+    document.getElementById('recordValue').value = '';
+    document.getElementById('recordMemo').value = '';
+    await loadUserRecords();
+  } catch (error) {
+    status.textContent = `저장 오류: ${error.message}`;
   }
 }
 
+// -------------------- 나의 가격 기록: 조회 및 메모 검색 --------------------
+async function loadUserRecords() {
+  const list = document.getElementById('userRecordsList');
+  if (!list) return;
 
-function renderPrice(d, month) {
-  // 가격 API 응답에서 분석 결과 객체를 찾습니다.
-  const result = d['분석 결과'] ?? d;
+  try {
+    const response = await fetch(`${API_BASE}/api/user-data`);
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.detail || '기록을 불러오지 못했습니다.');
 
+    if (!result.data || result.data.length === 0) {
+      list.innerHTML = '<p>아직 저장된 기록이 없습니다.</p>';
+      return;
+    }
+
+    const searchElement = document.getElementById('recordSearch');
+    const keyword = searchElement ? searchElement.value.trim().toLowerCase() : '';
+    const filteredRecords = result.data.filter(record =>
+      (record.memo || '').toLowerCase().includes(keyword)
+    );
+
+    if (filteredRecords.length === 0) {
+      list.innerHTML = '<p>검색 결과가 없습니다.</p>';
+      return;
+    }
+
+    list.innerHTML = filteredRecords.map(record => `
+      <div class="panel record-item">
+        <strong>${escapeHtml(record.date)}</strong>
+        <p>가격: ${fmtNum(record.value)}</p>
+        <p>메모: ${escapeHtml(record.memo || '메모 없음')}</p>
+        <div class="record-buttons">
+          <button class="secondary" onclick="editUserRecord(${Number(record.id)})">수정</button>
+          <button class="secondary" onclick="deleteUserRecord(${Number(record.id)})">삭제</button>
+        </div>
+      </div>
+    `).join('');
+  } catch (error) {
+    list.textContent = `기록 조회 오류: ${error.message}`;
+  }
+}
+
+function resetRecordSearch() {
+  document.getElementById('recordSearch').value = '';
+  loadUserRecords();
+}
+
+// -------------------- 나의 가격 기록: 수정 --------------------
+async function editUserRecord(id) {
+  const date = prompt('수정할 날짜를 입력해 주세요. (YYYY-MM-DD)');
+  if (date === null) return;
+  const value = prompt('수정할 가격을 입력해 주세요.');
+  if (value === null) return;
+  const memo = prompt('수정할 메모를 입력해 주세요.');
+  if (memo === null) return;
+
+  if (!date || !value || Number(value) < 0 || !Number.isFinite(Number(value))) {
+    alert('날짜와 0 이상의 올바른 가격을 입력해 주세요.');
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE}/api/user-data/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date, value: Number(value), memo })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.detail || '수정에 실패했습니다.');
+
+    alert('기록이 수정되었습니다!');
+    await loadUserRecords();
+  } catch (error) {
+    alert(`수정 오류: ${error.message}`);
+  }
+}
+
+// -------------------- 나의 가격 기록: 삭제 --------------------
+async function deleteUserRecord(id) {
+  if (!confirm('정말 이 기록을 삭제할까요?')) return;
+
+  try {
+    const response = await fetch(`${API_BASE}/api/user-data/${id}`, { method: 'DELETE' });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.detail || '삭제에 실패했습니다.');
+
+    alert('기록이 삭제되었습니다!');
+    await loadUserRecords();
+  } catch (error) {
+    alert(`삭제 오류: ${error.message}`);
+  }
+}
+
+// -------------------- 가격 분석 --------------------
+async function analyzeSelected() {
+  const month = document.getElementById('monthInput').value;
+  if (!month) {
+    alert('분석할 월을 선택해 주세요.');
+    return;
+  }
+
+  showView('resultsView');
+  setText('resultTitle', selectedProduct + ' 가격 리포트');
+  setText('resultSubtitle', month + ' 기준 가격 변화와 다음 달 전망');
+  setText('reportPill', month + ' REPORT');
+  setText('currentPrice', '불러오는 중…');
+  setText('aiAnalysis', '가격 데이터를 불러오고 있어요.');
+  setText('analysisStatus', '');
+  setText('forecastPrice', '불러오는 중…');
+  setText('forecastMonth', '예측 결과를 불러오는 중이에요.');
+
+  loadPriceHistory(selectedProduct);
+
+  try {
+    const response = await fetch(`${API_BASE}/api/prices?product=${encodeURIComponent(selectedProduct)}&month=${encodeURIComponent(month)}`);
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || data.message || '가격 정보를 불러오지 못했습니다.');
+
+    renderPrice(data, month);
+    await loadExplanation(selectedProduct, month, data);
+    await loadForecast(selectedProduct, month);
+  } catch (error) {
+    setText('currentPrice', '조회 실패');
+    setText('aiAnalysis', '가격 정보를 불러오지 못했어요. ' + error.message + '\n\nAPI 서버와 선택한 월의 데이터를 확인해 주세요.');
+    setText('analysisStatus', 'API 연결 또는 해당 월 데이터 확인이 필요합니다.');
+    setText('forecastPrice', '—');
+    setText('forecastMonth', '예측 정보를 가져오지 못했어요.');
+    setText('forecastError', error.message);
+  }
+}
+
+function renderPrice(data, month) {
+  const result = data['분석 결과'] ?? data;
   const price = findVal(result, ['가격', 'price', 'current_price']);
-  const mom = findVal(result, [
-    '전월 대비 변화율(%)',
-    '전월 대비(%)',
-    '전월 대비',
-    'mom_change_pct',
-    'mom_pct'
-  ]);
-  const yoy = findVal(result, [
-    '전년 동월 대비 변화율(%)',
-    '전년 동월 대비(%)',
-    '전년 동월 대비',
-    'yoy_change_pct',
-    'yoy_pct'
-  ]);
-  const avg = findVal(result, [
-    '최근 3년 평균 대비 변화율(%)',
-    '최근 3년 같은 달 평균 대비 변화율(%)',
-    '최근 3년 평균 대비(%)',
-    '3년 평균 대비 변화율(%)',
-    '평균 대비 변화율(%)',
-    '평균 대비',
-    'avg_change_pct'
-  ]);
+  const mom = findVal(result, ['전월 대비 변화율(%)', '전월 대비(%)', '전월 대비', 'mom_change_pct', 'mom_pct']);
+  const yoy = findVal(result, ['전년 동월 대비 변화율(%)', '전년 동월 대비(%)', '전년 동월 대비', 'yoy_change_pct', 'yoy_pct']);
+  const avg = findVal(result, ['최근 3년 평균 대비 변화율(%)', '최근 3년 같은 달 평균 대비 변화율(%)', '최근 3년 평균 대비(%)', '3년 평균 대비 변화율(%)', '평균 대비 변화율(%)', '평균 대비', 'avg_change_pct']);
 
   setText('currentPrice', price == null ? '자료 없음' : fmtNum(price));
   setText('priceUnit', month + ' 기준 · 원본 데이터 단위');
   setText('momValue', fmtPct(mom));
   setText('yoyValue', fmtPct(yoy));
   setText('avgValue', fmtPct(avg));
-
   metricTone('momValue', mom);
   metricTone('yoyValue', yoy);
   metricTone('avgValue', avg);
 
-  setText(
-    'momSub',
-    mom == null ? '비교 데이터가 없어요' :
-      Number(mom) > 0 ? '전월보다 올랐어요' :
-      Number(mom) < 0 ? '전월보다 내렸어요' : '전월과 같아요'
-  );
+  setText('momSub', mom == null ? '비교 데이터가 없어요' : Number(mom) > 0 ? '전월보다 올랐어요' : Number(mom) < 0 ? '전월보다 내렸어요' : '전월과 같아요');
+  setText('yoySub', yoy == null ? '비교 데이터가 없어요' : Number(yoy) > 0 ? '작년 같은 달보다 올랐어요' : Number(yoy) < 0 ? '작년 같은 달보다 내렸어요' : '작년 같은 달과 같아요');
+  setText('avgSub', avg == null ? '비교 데이터가 없어요' : Number(avg) > 0 ? '최근 3년 평균보다 높아요' : Number(avg) < 0 ? '최근 3년 평균보다 낮아요' : '최근 3년 평균과 같아요');
 
-  setText(
-    'yoySub',
-    yoy == null ? '비교 데이터가 없어요' :
-      Number(yoy) > 0 ? '작년 같은 달보다 올랐어요' :
-      Number(yoy) < 0 ? '작년 같은 달보다 내렸어요' : '작년 같은 달과 같아요'
-  );
-
-  setText(
-    'avgSub',
-    avg == null ? '비교 데이터가 없어요' :
-      Number(avg) > 0 ? '최근 3년 평균보다 높아요' :
-      Number(avg) < 0 ? '최근 3년 평균보다 낮아요' : '최근 3년 평균과 같아요'
-  );
-
-  const lines = [];
-  lines.push(
-    `${month} ${selectedProduct} 가격은 ${
-      price == null ? '확인되지 않았어요' : fmtNum(price) + ' (원본 데이터 단위)'
-    }입니다.`
-  );
-
-  if (mom != null) {
-    lines.push(`전월 대비 ${fmtPct(mom)} ${Number(mom) > 0 ? '상승' : Number(mom) < 0 ? '하락' : '변동 없음'}했어요.`);
-  }
-
-  if (yoy != null) {
-    lines.push(`전년 동월과 비교하면 ${fmtPct(yoy)} ${Number(yoy) > 0 ? '높은' : Number(yoy) < 0 ? '낮은' : '같은'} 수준이에요.`);
-  }
-
-  if (avg != null) {
-    lines.push(`최근 3년 같은 달 평균과 비교하면 ${fmtPct(avg)} 차이가 있어요.`);
-  }
-
-  
+  const lines = [`${month} ${selectedProduct} 가격은 ${price == null ? '확인되지 않았어요' : fmtNum(price) + ' (원본 데이터 단위)'}입니다.`];
+  if (mom != null) lines.push(`전월 대비 ${fmtPct(mom)} ${Number(mom) > 0 ? '상승' : Number(mom) < 0 ? '하락' : '변동 없음'}했어요.`);
+  if (yoy != null) lines.push(`전년 동월과 비교하면 ${fmtPct(yoy)} ${Number(yoy) > 0 ? '높은' : Number(yoy) < 0 ? '낮은' : '같은'} 수준이에요.`);
+  if (avg != null) lines.push(`최근 3년 같은 달 평균과 비교하면 ${fmtPct(avg)} 차이가 있어요.`);
+  setText('aiAnalysis', lines.join('\n'));
 }
 
+async function loadPriceHistory(product) {
+  const requestId = ++chartRequestId;
+  setText('chartProductTitle', product + ' 월별 가격');
+  setText('chartRange', '데이터를 불러오는 중');
+  setText('chartStatus', '월별 가격 데이터를 불러오고 있어요.');
+  setText('priceChart', '');
 
-async function loadPriceHistory(product){
-  const requestId=++chartRequestId;
-  setText('chartProductTitle',product+' 월별 가격');
-  setText('chartRange','데이터를 불러오는 중');
-  setText('chartStatus','월별 가격 데이터를 불러오고 있어요.');
-  setText('priceChart','');
+  try {
+    const response = await fetch(`${API_BASE}/api/prices/history?product=${encodeURIComponent(product)}`);
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.detail || '그래프 데이터를 불러오지 못했습니다.');
+    if (requestId !== chartRequestId) return;
 
-  try{
-    const res=await fetch(`${API_BASE}/api/prices/history?product=${encodeURIComponent(product)}`);
-    const result=await res.json();
-    if(!res.ok)throw new Error(result.detail||'그래프 데이터를 불러오지 못했습니다.');
-    if(requestId!==chartRequestId)return;
-
-    const rows=Array.isArray(result.데이터)?result.데이터:[];
-    const valid=rows.filter(d=>d.날짜&&Number.isFinite(Number(d.가격)));
-
-    if(valid.length===0)throw new Error('표시할 가격 데이터가 없습니다.');
+    const rows = Array.isArray(result.데이터) ? result.데이터 : [];
+    const valid = rows.filter(row => row.날짜 && Number.isFinite(Number(row.가격)));
+    if (valid.length === 0) throw new Error('표시할 가격 데이터가 없습니다.');
 
     drawPriceChart(valid);
-    setText('chartRange',valid[0].날짜+' ~ '+valid[valid.length-1].날짜);
-    setText('chartStatus',`총 ${valid.length}개월의 실제 가격 데이터를 표시하고 있어요.`);
-    showChartTooltip(valid[valid.length-1]);
-  }catch(err){
-    if(requestId!==chartRequestId)return;
-    setText('priceChart','');
-    setText('chartRange','조회 실패');
-    setText('chartTooltip','그래프를 표시할 수 없습니다.');
-    setText('chartStatus',err.message+' 서버 실행 상태와 /api/prices/history API를 확인해 주세요.');
+    setText('chartRange', valid[0].날짜 + ' ~ ' + valid[valid.length - 1].날짜);
+    setText('chartStatus', `총 ${valid.length}개월의 실제 가격 데이터를 표시하고 있어요.`);
+    showChartTooltip(valid[valid.length - 1]);
+  } catch (error) {
+    if (requestId !== chartRequestId) return;
+    setText('priceChart', '');
+    setText('chartRange', '조회 실패');
+    setText('chartTooltip', '그래프를 표시할 수 없습니다.');
+    setText('chartStatus', error.message + ' 서버 실행 상태와 /api/prices/history API를 확인해 주세요.');
   }
 }
 
-function drawPriceChart(rows){
-  const container=document.getElementById('priceChart');
-  const width=560;
-  const height=230;
-  const left=48;
-  const right=14;
-  const top=15;
-  const bottom=38;
-  const plotW=width-left-right;
-  const plotH=height-top-bottom;
+function drawPriceChart(rows) {
+  const container = document.getElementById('priceChart');
+  const width = 560, height = 230, left = 58, right = 14, top = 15, bottom = 38;
+  const plotW = width - left - right, plotH = height - top - bottom;
+  const values = rows.map(row => Number(row.가격));
+  const minValue = Math.min(...values), maxValue = Math.max(...values);
+  const spread = maxValue - minValue;
+  const padding = spread === 0 ? Math.max(maxValue * 0.1, 1) : spread * 0.12;
+  const minY = Math.max(0, minValue - padding), maxY = maxValue + padding;
+  const rangeY = maxY - minY || 1;
+  const x = index => left + (rows.length === 1 ? plotW / 2 : index * plotW / (rows.length - 1));
+  const y = value => top + (maxY - value) * plotH / rangeY;
 
-  const values=rows.map(d=>Number(d.가격));
-  const minValue=Math.min(...values);
-  const maxValue=Math.max(...values);
-  const spread=maxValue-minValue;
-  const padding=spread===0?Math.max(maxValue*0.1,1):spread*0.12;
-  const minY=Math.max(0,minValue-padding);
-  const maxY=maxValue+padding;
-  const rangeY=maxY-minY||1;
-
-  const x=i=>left+(rows.length===1?plotW/2:i*plotW/(rows.length-1));
-  const y=value=>top+(maxY-value)*plotH/rangeY;
-
-  let svg=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(selectedProduct)} 월별 가격 선 그래프" xmlns="http://www.w3.org/2000/svg">`;
-
-  // 가로 눈금과 가격 레이블
-  for(let i=0;i<5;i++){
-    const value=minY+(rangeY*i/4);
-    const yy=y(value);
-    svg+=`<line x1="${left}" y1="${yy}" x2="${width-right}" y2="${yy}" stroke="#e8ece3" stroke-width="1"/>`;
-    svg+=`<text x="${left-8}" y="${yy+4}" font-size="10" fill="#879184" text-anchor="end">${escapeHtml(fmtNum(value))}</text>`;
+  let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(selectedProduct)} 월별 가격 선 그래프" xmlns="http://www.w3.org/2000/svg">`;
+  for (let i = 0; i < 5; i++) {
+    const value = minY + rangeY * i / 4, yy = y(value);
+    svg += `<line x1="${left}" y1="${yy}" x2="${width-right}" y2="${yy}" stroke="#e8ece3"/>`;
+    svg += `<text x="${left-8}" y="${yy+4}" font-size="10" fill="#879184" text-anchor="end">${escapeHtml(fmtNum(value))}</text>`;
   }
+  const points = rows.map((row, index) => `${x(index)},${y(Number(row.가격))}`).join(' ');
+  svg += `<polygon points="${left},${top+plotH} ${points} ${x(rows.length-1)},${top+plotH}" fill="#dce8d8" opacity="0.62"/>`;
+  svg += `<polyline points="${points}" fill="none" stroke="#527a58" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
 
-  // 월별 가격을 잇는 선
-  const points=rows.map((d,i)=>`${x(i)},${y(Number(d.가격))}`).join(' ');
-  const areaPoints=`${left},${top+plotH} ${points} ${x(rows.length-1)},${top+plotH}`;
-  svg+=`<polygon points="${areaPoints}" fill="#dce8d8" opacity="0.62"/>`;
-  svg+=`<polyline points="${points}" fill="none" stroke="#527a58" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
-
-  // 날짜 레이블은 대략 1년에 한 번씩 표시
-  const labelIndices=new Set([0,rows.length-1]);
-  for(let i=0;i<rows.length;i++){
-    if(rows[i].날짜.endsWith('-01'))labelIndices.add(i);
-  }
-  const sortedLabels=[...labelIndices].sort((a,b)=>a-b);
-
-  sortedLabels.forEach(i=>{
-    const label=rows[i].날짜;
-    const labelText=label.slice(0,4)+'-'+label.slice(5,7);
-    let anchor='middle';
-    if(i===0)anchor='start';
-    if(i===rows.length-1)anchor='end';
-    svg+=`<text x="${x(i)}" y="${height-12}" font-size="10" fill="#879184" text-anchor="${anchor}">${labelText}</text>`;
+  const labelIndices = new Set([0, rows.length - 1]);
+  rows.forEach((row, index) => { if (row.날짜.endsWith('-01')) labelIndices.add(index); });
+  [...labelIndices].sort((a,b) => a-b).forEach(index => {
+    const label = rows[index].날짜.slice(0, 7);
+    const anchor = index === 0 ? 'start' : index === rows.length - 1 ? 'end' : 'middle';
+    svg += `<text x="${x(index)}" y="${height-12}" font-size="10" fill="#879184" text-anchor="${anchor}">${label}</text>`;
   });
 
-  // 클릭 및 키보드 선택이 가능한 데이터 포인트
-  rows.forEach((d,i)=>{
-    const px=x(i);
-    const py=y(Number(d.가격));
-    svg+=`<g class="chart-point" tabindex="0" role="button" aria-label="${escapeHtml(d.날짜)} 가격 ${escapeHtml(fmtNum(d.가격))}" data-index="${i}">
+  rows.forEach((row, index) => {
+    const px = x(index), py = y(Number(row.가격));
+    svg += `<g class="chart-point" tabindex="0" role="button" aria-label="${escapeHtml(row.날짜)} 가격 ${escapeHtml(fmtNum(row.가격))}" data-index="${index}">
       <circle cx="${px}" cy="${py}" r="9" fill="transparent"/>
       <circle cx="${px}" cy="${py}" r="3" fill="#527a58" stroke="#fffefa" stroke-width="1.5"/>
     </g>`;
   });
+  svg += '</svg>';
+  container.innerHTML = svg;
 
-  svg+='</svg>';
-  container.innerHTML=svg;
-
-  container.querySelectorAll('.chart-point').forEach(point=>{
-    const index=Number(point.dataset.index);
-    const item=rows[index];
-    point.addEventListener('mouseenter',()=>showChartTooltip(item));
-    point.addEventListener('click',()=>showChartTooltip(item));
-    point.addEventListener('focus',()=>showChartTooltip(item));
-    point.addEventListener('keydown',event=>{
-      if(event.key==='Enter'||event.key===' '){
+  container.querySelectorAll('.chart-point').forEach(point => {
+    const item = rows[Number(point.dataset.index)];
+    point.addEventListener('mouseenter', () => showChartTooltip(item));
+    point.addEventListener('click', () => showChartTooltip(item));
+    point.addEventListener('focus', () => showChartTooltip(item));
+    point.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         showChartTooltip(item);
       }
@@ -497,77 +555,41 @@ function drawPriceChart(rows){
   });
 }
 
-function showChartTooltip(item){
-  if(!item)return;
-  setText('chartTooltip',`${item.날짜} · ${fmtNum(item.가격)} (원본 데이터 단위)`);
+function showChartTooltip(item) {
+  if (item) setText('chartTooltip', `${item.날짜} · ${fmtNum(item.가격)} (원본 데이터 단위)`);
 }
 
-function escapeHtml(value){
-  return String(value).replace(/[&<>"']/g,char=>({
-    '&':'&amp;',
-    '<':'&lt;',
-    '>':'&gt;',
-    '"':'&quot;',
-    "'":'&#39;'
-  })[char]);
-}
-
-async function loadExplanation(product,month,priceData){
-  const status=document.getElementById('analysisStatus');
-  try{
-    status.textContent='AI 해설을 확인하고 있어요…';
-    const r=await fetch(`${API_BASE}/api/prices/explain?product=${encodeURIComponent(product)}&month=${encodeURIComponent(month)}`);
-    if(!r.ok)throw new Error('해설 API를 사용할 수 없습니다.');
-    const d=await r.json();
-   const explanation = d['AI 해설'];
-    if(explanation){
-      setText('aiAnalysis',typeof explanation==='string'?explanation:JSON.stringify(explanation,null,2));
-      status.textContent='AI 해설을 불러왔어요.';
-    }else{
-      status.textContent='가격 지표를 바탕으로 요약했어요.';
+async function loadExplanation(product, month, priceData) {
+  const status = document.getElementById('analysisStatus');
+  try {
+    status.textContent = 'AI 해설을 확인하고 있어요…';
+    const response = await fetch(`${API_BASE}/api/prices/explain?product=${encodeURIComponent(product)}&month=${encodeURIComponent(month)}`);
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || '해설 API를 사용할 수 없습니다.');
+    const explanation = data['AI 해설'] ?? data.explanation;
+    if (explanation) {
+      setText('aiAnalysis', typeof explanation === 'string' ? explanation : JSON.stringify(explanation, null, 2));
+      status.textContent = 'AI 해설을 불러왔어요.';
+    } else {
+      status.textContent = '가격 지표를 바탕으로 요약했어요.';
     }
- }catch(e){
-  const price = findVal(priceData, ['가격', 'price', 'current_price']);
-  const mom = findVal(priceData, ['전월 대비 변화율(%)', '전월 대비(%)', '전월 대비', 'mom_change_pct', 'mom_pct']);
-  const yoy = findVal(priceData, ['전년 동월 대비 변화율(%)', '전년 동월 대비(%)', '전년 동월 대비', 'yoy_change_pct', 'yoy_pct']);
-  const avg = findVal(priceData, ['최근 3년 평균 대비 변화율(%)', '최근 3년 같은 달 평균 대비 변화율(%)', '3년 평균 대비 변화율(%)', '평균 대비 변화율(%)', 'avg_change_pct']);
-
-  const lines = [];
-
-  if (price !== null) {
-    lines.push(`${month} 기준 가격은 ${price}입니다.`);
+  } catch (error) {
+    const source = priceData['분석 결과'] ?? priceData;
+    const price = findVal(source, ['가격', 'price', 'current_price']);
+    const mom = findVal(source, ['전월 대비 변화율(%)', '전월 대비(%)', '전월 대비', 'mom_change_pct', 'mom_pct']);
+    const yoy = findVal(source, ['전년 동월 대비 변화율(%)', '전년 동월 대비(%)', '전년 동월 대비', 'yoy_change_pct', 'yoy_pct']);
+    const avg = findVal(source, ['최근 3년 평균 대비 변화율(%)', '최근 3년 같은 달 평균 대비 변화율(%)', '3년 평균 대비 변화율(%)', '평균 대비 변화율(%)', 'avg_change_pct']);
+    const lines = [];
+    if (price != null) lines.push(`${month} 기준 가격은 ${fmtNum(price)}입니다.`);
+    if (mom != null) lines.push(`전월 대비 ${Number(mom) > 0 ? '상승' : Number(mom) < 0 ? '하락' : '변동 없이'} ${Math.abs(Number(mom)).toFixed(2)}%입니다.`);
+    if (yoy != null) lines.push(`전년 동월 대비 ${Number(yoy) > 0 ? '상승' : Number(yoy) < 0 ? '하락' : '변동 없이'} ${Math.abs(Number(yoy)).toFixed(2)}%입니다.`);
+    if (avg != null) lines.push(`최근 3년 같은 달 평균 대비 ${Number(avg) > 0 ? '높고' : Number(avg) < 0 ? '낮은' : '비슷한'} 수준입니다.`);
+    setText('aiAnalysis', lines.length ? lines.join(' ') : '현재 가격 지표를 바탕으로 해설을 만들 수 없습니다.');
+    status.textContent = '가격 지표를 이용한 기본 해설이에요. AI 해설은 일시적으로 이용할 수 없습니다.';
   }
-
-  if (mom !== null) {
-    lines.push(`전월 대비 ${Number(mom) > 0 ? '상승' : Number(mom) < 0 ? '하락' : '변동 없이'} ${Math.abs(Number(mom)).toFixed(2)}%입니다.`);
-  }
-
-  if (yoy !== null) {
-    lines.push(`전년 동월 대비 ${Number(yoy) > 0 ? '상승' : Number(yoy) < 0 ? '하락' : '변동 없이'} ${Math.abs(Number(yoy)).toFixed(2)}%입니다.`);
-  }
-
-  if (avg !== null) {
-    lines.push(`최근 3년 같은 달 평균 대비 ${Number(avg) > 0 ? '높고' : Number(avg) < 0 ? '낮은' : '비슷한'} 수준입니다.`);
-  }
-
-  setText('aiAnalysis', lines.length ? lines.join(' ') : '현재 가격 지표를 바탕으로 해설을 만들 수 없습니다.');
-  status.textContent = '가격 지표를 이용한 기본 해설이에요. AI 해설은 일시적으로 이용할 수 없습니다.';
 }
-}
-
 
 async function loadForecast(product, month) {
-  const forecastIds = [
-    'forecastMonth',
-    'forecastPrice',
-    'forecastMethod',
-    'maeValue',
-    'mapeValue',
-    'validationCount',
-    'forecastError'
-  ];
-
-  // 이전 결과가 남지 않도록 초기화
   setText('forecastMonth', '예측 결과를 불러오는 중이에요.');
   setText('forecastPrice', '불러오는 중…');
   setText('forecastMethod', '과거 가격 패턴을 활용한 참고용 예측');
@@ -577,70 +599,27 @@ async function loadForecast(product, month) {
   setText('forecastError', '예측은 참고 정보이며 실제 가격을 보장하지 않습니다.');
 
   try {
-    const url =
-      `${API_BASE}/api/prices/forecast` +
-      `?product=${encodeURIComponent(product)}` +
-      `&month=${encodeURIComponent(month)}`;
-
+    const url = `${API_BASE}/api/prices/forecast?product=${encodeURIComponent(product)}&month=${encodeURIComponent(month)}`;
     const response = await fetch(url);
     const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        typeof data.detail === 'string'
-          ? data.detail
-          : JSON.stringify(data.detail || data)
-      );
-    }
+    if (!response.ok) throw new Error(typeof data.detail === 'string' ? data.detail : JSON.stringify(data.detail || data));
 
     const forecastMonth = data['예측월'] ?? data['예측 월'] ?? data.forecast_month;
-    const price = data['예측 가격'] ?? data['예측가격'] ??
-      data.forecast_price ?? data.prediction;
+    const price = data['예측 가격'] ?? data['예측가격'] ?? data.forecast_price ?? data.prediction;
     const method = data['예측 방법'] ?? data['예측방법'] ?? data.method;
     const mae = data['평균 절대 오차(MAE)'] ?? data.MAE ?? data.mae;
-    const mape =
-      data['평균 절대 백분율 오차(MAPE, %)'] ??
-      data['평균 절대 백분율 오차(MAPE,%)'] ??
-      data.MAPE ?? data.mape;
-    const count = data['과거 검증 건수'] ??
-      data['검증 건수'] ?? data.validation_count;
+    const mape = data['평균 절대 백분율 오차(MAPE, %)'] ?? data['평균 절대 백분율 오차(MAPE,%)'] ?? data.MAPE ?? data.mape;
+    const count = data['과거 검증 건수'] ?? data['검증 건수'] ?? data.validation_count;
     const note = data['안내'] ?? data['설명'] ?? data.note;
 
-    setText(
-      'forecastMonth',
-      forecastMonth ? `${forecastMonth} 예측` : '다음 달 기준 예측'
-    );
-
-    setText(
-      'forecastPrice',
-      price !== null && price !== undefined && price !== ''
-        ? fmtNum(price)
-        : '자료 없음'
-    );
-
+    setText('forecastMonth', forecastMonth ? `${forecastMonth} 예측` : '다음 달 기준 예측');
+    setText('forecastPrice', price !== null && price !== undefined && price !== '' ? fmtNum(price) : '자료 없음');
     setText('forecastMethod', method || '과거 가격 패턴을 활용한 기준 예측');
     setText('maeValue', mae !== null && mae !== undefined ? fmtNum(mae) : '—');
-    setText(
-      'mapeValue',
-      mape !== null && mape !== undefined ? `${fmtNum(mape)}%` : '—'
-    );
-
-    setText(
-      'validationCount',
-      count !== null && count !== undefined
-        ? `과거 검증 건수: ${fmtNum(count)}개월`
-        : '오차 지표는 과거 검증 구간의 결과입니다.'
-    );
-
-    setText(
-      'forecastError',
-      note || '예측은 참고 정보이며 실제 가격을 보장하지 않습니다.'
-    );
-
-    console.log('예측 API 응답:', data);
+    setText('mapeValue', mape !== null && mape !== undefined ? `${fmtNum(mape)}%` : '—');
+    setText('validationCount', count !== null && count !== undefined ? `과거 검증 건수: ${fmtNum(count)}개월` : '오차 지표는 과거 검증 구간의 결과입니다.');
+    setText('forecastError', note || '예측은 참고 정보이며 실제 가격을 보장하지 않습니다.');
   } catch (error) {
-    console.error('예측 결과 표시 오류:', error);
-
     setText('forecastMonth', '예측 정보를 불러오지 못했어요.');
     setText('forecastPrice', '조회 실패');
     setText('forecastMethod', '예측 API 응답을 확인해 주세요.');
@@ -651,8 +630,13 @@ async function loadForecast(product, month) {
   }
 }
 
-
-document.getElementById('monthInput').value='2026-08';
+document.getElementById('monthInput').value = '2026-08';
 </script>
 </body>
 </html>
+'''
+
+path = Path("/mnt/data/index.html")
+path.write_text(html, encoding="utf-8")
+print(f"완성된 frontend 파일 생성: {path}")
+print(f"파일 크기: {path.stat().st_size:,} bytes")

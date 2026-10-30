@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 
 from app.routers.prices import router as prices_router
+from app.routers import user_data
 
 
 app = FastAPI(
@@ -14,6 +15,7 @@ app = FastAPI(
 )
 
 app.include_router(prices_router)
+app.include_router(user_data.router)
 
 
 # 프로젝트 폴더와 웹페이지 파일 위치 설정
